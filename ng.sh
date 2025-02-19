@@ -140,9 +140,9 @@ function ng_finalize {
     fi
 }
 
-NUM={arg:0}
-PP={arg:1}
-SEQ={arg:2}
+NUM=$1
+PP=$2
+SEQ=$3
 
 NP=0
 WP="No pattern"
@@ -154,7 +154,7 @@ for i in $(seq 4); do
     arr+=("${SEQ:$j:1}")
 done
 
-if [[ -z "{args}" ]]; then
+if [[ -z $1 ]]; then
     NUM=0
 
     for i in $(seq 24); do
