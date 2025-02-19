@@ -132,6 +132,8 @@ function ng_finalize {
         echo "Game over! Score: $TP."
         echo "Type '-t ng' to try again!"
     fi
+
+    exit 0
 }
 
 NUM=$1
