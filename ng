@@ -138,6 +138,8 @@ SEQ="{arg:2}"
 
 arr=()
 
+echo $NUM $PP $SEQ
+
 for i in $(seq 4); do
     j=$((i - 1))
     arr+=("${SEQ:$j:1}")
