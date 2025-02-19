@@ -193,7 +193,7 @@ function ng_finalize {
     if [[ -n "$NEWNUM" ]] ; then
         echo "$SEQ: $WP, +$NP points ($TP points total)"
         echo
-        echo "bash ng.sh $NEWNUM $TP SEQ"
+        echo "-t ng $NEWNUM $TP SEQ"
         exit 0
     else
         echo "$SEQ: $WP, +$NP points ($TP points total)"
