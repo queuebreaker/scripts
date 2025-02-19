@@ -138,8 +138,6 @@ function ng_finalize {
         echo "game over, score: $TP"
         exit 0
     fi
-
-    
 }
 
 NUM="{arg:0}"
@@ -156,56 +154,69 @@ for i in $(seq 4); do
     arr+=("${SEQ:$j:1}")
 done
 
-if [[ $(echo "$SEQ" | wc -c) -eq 5 ]]; then
-    if echo $NUM | grep $SEQ ; then
-        if ng_check_iar; then
-            NP=10
-            WP="all numbers in a row"
-            ng_finalize
-        else
-            if ng_check_id; then
+if [[ -z $NUM && -z $PP && -z $SEQ ]]; then
+    NUM=0
+
+    for i in $(seq 24); do
+        NUM=$NUM$(shuf -i 0-9 -n 1)
+    done
+
+    echo $NUM
+    echo
+    echo -t $NUM 0 SEQ
+    exit 0
+else
+    if [[ $(echo "$SEQ" | wc -c) -eq 5 ]]; then
+        if echo $NUM | grep $SEQ ; then
+            if ng_check_iar; then
                 NP=10
-                WP="all numbers identical"
+                WP="all numbers in a row"
                 ng_finalize
             else
-                if ng_check_20; then
-                    NP=5
-                    WP="all numbers add up to 20"
+                if ng_check_id; then
+                    NP=10
+                    WP="all numbers identical"
                     ng_finalize
                 else
-                    if ng_check_ao; then
-                        NP=3
-                        WP="all numbers are odd"
+                    if ng_check_20; then
+                        NP=5
+                        WP="all numbers add up to 20"
                         ng_finalize
                     else
-                        if ng_check_ae; then
+                        if ng_check_ao; then
                             NP=3
-                            WP="all numbers are even"
+                            WP="all numbers are odd"
                             ng_finalize
                         else
-                            if ng_check_05; then
+                            if ng_check_ae; then
                                 NP=3
-                                WP="all numbers are less than 5"
+                                WP="all numbers are even"
                                 ng_finalize
                             else
-                                if ng_check_69; then
+                                if ng_check_05; then
                                     NP=3
-                                    WP="all numbers are greater than 5"
+                                    WP="all numbers are less than 5"
                                     ng_finalize
                                 else
-                                    NP=0
-                                    WP="no pattern"
-                                    ng_finalize
+                                    if ng_check_69; then
+                                        NP=3
+                                        WP="all numbers are greater than 5"
+                                        ng_finalize
+                                    else
+                                        NP=0
+                                        WP="no pattern"
+                                        ng_finalize
+                                    fi
                                 fi
                             fi
                         fi
                     fi
                 fi
-            fi
-        fi 
+            fi 
+        else
+            echo "ERROR: no such sequence in number"
+        fi
     else
-        echo "ERROR: no such sequence in number"
+        echo "ERROR: sequence is not 4 numbers long"
     fi
-else
-    echo "ERROR: sequence is not 4 numbers long"
 fi
