@@ -53,18 +53,18 @@ function ng_check_ao {
 
     for i in $(seq 4); do
         j=$((i - 1))
-        if [[ $((${arr[$j]} % 2)) -ne 0 ]]; then
+        if [[ $((${arr[$j]} % 2)) -eq 1 ]]; then
             test=$((test + 1))
         else
             true
         fi
-
-        if [[ $test = 4 ]]; then
-            return 0
-        else
-            return 1
-        fi
     done
+
+    if [[ $test = 4 ]]; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 function ng_check_ae {
@@ -95,13 +95,13 @@ function ng_check_05 {
         else
             true
         fi
-
-        if [[ $test = 4 ]]; then
-            return 0
-        else
-            return 1
-        fi
     done
+
+    if [[ $test = 4 ]]; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 function ng_check_69 {
@@ -130,7 +130,7 @@ function ng_finalize {
     if [[ -n "$NEWNUM" ]] ; then
         echo "$SEQ: $WP, +$NP points ($TP points total)"
         echo
-        echo "-t ng $NEWNUM $TP SEQ"
+        echo "bash ng.sh $NEWNUM $TP SEQ"
         exit 0
     else
         echo "$SEQ: $WP, +$NP points ($TP points total)"
@@ -143,9 +143,6 @@ function ng_finalize {
 NUM=$1
 PP=$2
 SEQ=$3
-
-NP=0
-WP="No pattern"
 
 arr=()
 
