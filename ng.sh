@@ -154,7 +154,7 @@ for i in $(seq 4); do
     arr+=("${SEQ:$j:1}")
 done
 
-if [[ -z $NUM && -z $PP && -z $SEQ ]]; then
+if [[ -z "{args}" ]]; then
     NUM=0
 
     for i in $(seq 24); do
