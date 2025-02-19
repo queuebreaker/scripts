@@ -132,6 +132,10 @@ function ng_finalize {
     fi
 }
 
+NUM=$1
+PP=$2
+SEQ=$3
+
 arr=()
 
 echo $NUM $PP $SEQ
