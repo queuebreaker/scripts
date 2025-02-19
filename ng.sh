@@ -163,7 +163,8 @@ if [[ -z $1 ]]; then
 
     echo $NUM
     echo
-    echo -t $NUM 0 SEQ
+    echo "-t ng $NUM 0 SEQ"
+    
     exit 0
 else
     SEQLEN=$(echo $SEQ | wc -c)
