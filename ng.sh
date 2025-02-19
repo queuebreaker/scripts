@@ -166,7 +166,8 @@ if [[ -z "{args}" ]]; then
     echo -t $NUM 0 SEQ
     exit 0
 else
-    if [[ $(echo "$SEQ" | wc -c) -eq 5 ]]; then
+    SEQLEN=$(echo $SEQ | wc -c)
+    if [[ $SEQLEN -eq 5 ]]; then
         if echo $NUM | grep $SEQ ; then
             if ng_check_iar; then
                 NP=10
