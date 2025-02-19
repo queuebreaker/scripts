@@ -140,9 +140,9 @@ function ng_finalize {
     fi
 }
 
-NUM="{arg:0}"
-PP="{arg:1}"
-SEQ="{arg:2}"
+NUM={arg:0}
+PP={arg:1}
+SEQ={arg:2}
 
 NP=0
 WP="No pattern"
