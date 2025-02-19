@@ -215,7 +215,7 @@ for i in $(seq 4); do
 done
 
 if [[ -z $1 ]]; then
-    NUM=0
+    NUM=''
 
     for i in $(seq 24); do
         NUM=$NUM$(shuf -i 0-9 -n 1)
