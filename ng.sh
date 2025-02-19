@@ -187,8 +187,8 @@ function ng_check_riar {
 }
 
 function ng_finalize {
-    TP=$(( PP + NP ))
-    NEWNUM=$(echo $NUM | sed -e "s/$SEQ//")
+    TP=$((PP + NP))
+    NEWNUM=${NUM//$SEQ/}
 
     if [[ -n "$NEWNUM" ]] ; then
         echo "$SEQ: $WP, +$NP points ($TP points total)"
@@ -221,15 +221,14 @@ if [[ -z $1 ]]; then
         NUM=$NUM$(shuf -i 0-9 -n 1)
     done
 
-    echo $NUM
+    echo "$NUM"
     echo
     echo "-t ng $NUM 0 SEQ"
     
     exit 0
 else
-    SEQLEN=$(echo $SEQ | wc -c)
-    if [[ $SEQLEN -eq 5 ]]; then
-        if echo $NUM | grep $SEQ ; then
+    if [[ ${#SEQ} -eq 4 ]]; then
+        if echo "$NUM" | grep -q "$SEQ"; then
             if ng_check_id; then
                 NP=2000
                 WP="all numbers identical"
