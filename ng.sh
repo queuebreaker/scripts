@@ -2,18 +2,19 @@
 
 function ng_check_iar {
     test=0
-        for i in $(seq 3); do
-            j=$((3 - ( i - 1 )))
-            k=$((2 - ( i - 1 )))
 
-            if [[ $((${arr[$j]} - ${arr[$k]})) -eq "1" ]]; then
-                test=$(( test + 1 ))
-            else
-                true
-            fi
+    for i in $(seq 3); do
+        j=$((3 - ( i - 1 )))
+        k=$((2 - ( i - 1 )))
+
+        if [[ $(( ${arr[$j]} - ${arr[$k]} )) -eq 1 ]] ; then
+            test=$((test + 1))
+        else
+            true
+        fi
     done
 
-    if [[ $test = "3" ]]; then
+    if [[ $test -eq 3 ]] ; then
         return 0
     else
         return 1
@@ -21,9 +22,11 @@ function ng_check_iar {
 }
 
 function ng_check_id {
-    sum=$((${arr[0]} + ${arr[1]} + ${arr[2]} + ${arr[3]} ))
+    sum=0
 
-    if [[ $sum = $((${arr[0]} * 4)) ]]; then
+    sum=$((${arr[0]} + ${arr[1]} + ${arr[2]} + ${arr[3]}))
+
+    if [[ $sum == $((${arr[0]} * 4)) ]]; then
         return 0
     else
         return 1
@@ -32,6 +35,7 @@ function ng_check_id {
 
 function ng_check_20 {
     sum=0
+
     for i in $(seq 4); do
         j=$((i - 1))
         sum=$((sum + ${arr[$j]}))
@@ -45,104 +49,107 @@ function ng_check_20 {
 }
 
 function ng_check_ao {
- test=0
- for i in $(seq 4); do
-    j=$((i - 1))
-    if [[ $((${arr[$j]} % 2)) -ne 0 ]]; then
-        test=$((test + 1))
-    else
-        true
-    fi
+    test=0
 
-    if [[ $test = "4" ]]; then
-        return 0
-    else
-        return 1
-    fi
-done
+    for i in $(seq 4); do
+        j=$((i - 1))
+        if [[ $((${arr[$j]} % 2)) -ne 0 ]]; then
+            test=$((test + 1))
+        else
+            true
+        fi
+
+        if [[ $test = 4 ]]; then
+            return 0
+        else
+            return 1
+        fi
+    done
 }
 
 function ng_check_ae {
- test=0
- for i in $(seq 4); do
-    j=$((i - 1))
-    if [[ $((${arr[$j]} % 2)) -eq 0 ]]; then
-        test=$((test + 1))
-    else
-        true
-    fi
+    test=0
+    for i in $(seq 4); do
+        j=$((i - 1))
+        if [[ $((${arr[$j]} % 2)) -eq 0 ]]; then
+            test=$((test + 1))
+        else
+            true
+        fi
+    done
 
-     if [[ $test = "4" ]]; then
+    if [[ $test = 4 ]]; then
         return 0
     else
         return 1
     fi
-done
 }
 
 function ng_check_05 {
- test=0
- for i in $(seq 4); do
-    j=$((i - 1))
-    if [[ $((6 - ${arr[$j]})) -gt 0 ]]; then
-        test=$((test + 1))
-    else
-        true
-    fi
+    test=0
 
-    if [[ $test = "4" ]]; then
-        return 0
-    else
-        return 1
-    fi
-done
+    for i in $(seq 4); do
+        j=$((i - 1))
+        if [[ $((6 - ${arr[$j]})) -gt 0 ]]; then
+            test=$((test + 1))
+        else
+            true
+        fi
+
+        if [[ $test = 4 ]]; then
+            return 0
+        else
+            return 1
+        fi
+    done
 }
 
 function ng_check_69 {
- test=0
- for i in $(seq 4); do
-    j=$((i - 1))
-    if [[ $((${arr[$j]} - 5)) -gt 0 ]]; then
-        test=$((test + 1))
-    else
-        true
-    fi
+    test=0
 
-    echo test
+    for i in $(seq 4); do
+        j=$((i - 1))
+        if [[ $((${arr[$j]} - 5)) -gt 0 ]]; then
+            test=$((test + 1))
+        else
+            true
+        fi
+    done
 
     if [[ $test = "4" ]]; then
         return 0
     else
         return 1
     fi
-done
 }
 
 function ng_finalize {
     TP=$(( PP + NP ))
     NEWNUM=$(echo $NUM | sed -e "s/$SEQ//")
 
-    if [[ "$NEWNUM" != ' ' ]] ; then
+    if [[ -n "$NEWNUM" ]] ; then
         echo "$SEQ: $WP, +$NP points ($TP points total)"
         echo
-        echo "-t ng $NEWNUM $TP SEQUENCE"
+        echo "-t ng $NEWNUM $TP SEQ"
         exit 0
     else
-        echo $SEQ: $WP
-        echo "Game over! Score: $TP."
-        echo "Type '-t ng' to try again!"
+        echo "$SEQ: $WP, +$NP points ($TP points total)"
+        echo
+        echo "game over, score: $TP"
+        exit 0
     fi
 
-    exit 0
+    
 }
 
-NUM=$1
-PP=$2
-SEQ=$3
+NUM="{arg:0}"
+PP="{arg:1}"
+SEQ="{arg:2}"
+
+NP=0
+WP="No pattern"
 
 arr=()
-
-echo $NUM $PP $SEQ
 
 for i in $(seq 4); do
     j=$((i - 1))
@@ -150,44 +157,44 @@ for i in $(seq 4); do
 done
 
 if [[ $(echo "$SEQ" | wc -c) -eq 5 ]]; then
-    if [[ $(echo $NUM | grep $SEQ) ]] ; then
-        if [[ $(ng_check_iar && echo $?) ]] ; then
+    if echo $NUM | grep $SEQ ; then
+        if ng_check_iar; then
             NP=10
-            WP="All numbers in a row"
+            WP="all numbers in a row"
             ng_finalize
         else
-            if [[ $(ng_check_id && echo $?) ]] ; then
+            if ng_check_id; then
                 NP=10
-                WP="All numbers identical"
+                WP="all numbers identical"
                 ng_finalize
             else
-                if [[ $(ng_check_20 && echo $?) ]] ; then
+                if ng_check_20; then
                     NP=5
-                    WP="All numbers add up to 20"
+                    WP="all numbers add up to 20"
                     ng_finalize
                 else
-                    if [[ $(ng_check_ao && echo $?) ]] ; then
+                    if ng_check_ao; then
                         NP=3
-                        WP="All numbers are odd"
+                        WP="all numbers are odd"
                         ng_finalize
                     else
-                        if [[ $(ng_check_ae && echo $?) ]] ; then
+                        if ng_check_ae; then
                             NP=3
-                            WP="All numbers are even"
+                            WP="all numbers are even"
                             ng_finalize
                         else
-                            if [[ $(ng_check_05 && echo $?) ]] ; then
+                            if ng_check_05; then
                                 NP=3
-                                WP="All numbers are less than 5"
+                                WP="all numbers are less than 5"
                                 ng_finalize
                             else
-                                if [[ $(ng_check_69 && echo $?) ]] ; then
+                                if ng_check_69; then
                                     NP=3
-                                    WP="All numbers are greater than 5"
+                                    WP="all numbers are greater than 5"
                                     ng_finalize
                                 else
                                     NP=0
-                                    WP="No pattern"
+                                    WP="no pattern"
                                     ng_finalize
                                 fi
                             fi
