@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function ng_check_iar {
     test=0
         for i in $(seq 3); do
