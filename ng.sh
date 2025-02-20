@@ -280,7 +280,7 @@ if [[ -z $1 ]]; then
     for i in $(seq 24); do
         NUM=$NUM$(shuf -i 0-9 -n 1)
     done
-
+    
     echo "$NUM"
     echo
     echo "-t ng $NUM 0 SEQ"
@@ -291,77 +291,77 @@ else
         if echo "$NUM" | grep -q "$SEQ"; then
             if ng_check_id; then
                 NP=420
-                WP="numbers are identical"
+                WP="identicals"
                 ng_finalize
             else
                 if ng_check_seq; then
                     NP=350
-                    WP="numbers are sequential"
+                    WP="sequentials"
                     ng_finalize
                 else
                     if ng_check_rseq; then
                         NP=350
-                        WP="numbers are sequential"
+                        WP="sequentials"
                         ng_finalize
                     else
                         if ng_check_m3; then
                             NP=51
-                            WP="numbers are multiples of 3"
+                            WP="multiples of 3"
                             ng_finalize
                         else
                             if ng_check_rep; then
                                 NP=42
-                                WP="sequence is an identical pair"
+                                WP="repetition"
                                 ng_finalize
                             else
                                 if ng_check_pair; then
                                     NP=42
-                                    WP="sequence is a pair of identicals"
+                                    WP="pair"
                                     ng_finalize
                                 else
                                     if ng_check_11; then
                                         NP=21
-                                        WP="numbers add up to 11"
+                                        WP="add up to 11"
                                         ng_finalize
                                     else
                                         if ng_check_22; then
                                             NP=21
-                                            WP="numbers add up to 22"
+                                            WP="add up to 22"
                                             ng_finalize
                                         else
                                             if ng_check_33; then
                                                 NP=21
-                                                WP="numbers add up to 33"
+                                                WP="add up to 33"
                                                 ng_finalize
                                             else
                                                 if ng_check_sml; then
                                                     NP=17
-                                                    WP="numbers are smaller than 4.5"
+                                                    WP="smallers"
                                                     ng_finalize
                                                 else
                                                     if ng_check_big; then
                                                         NP=17
-                                                        WP="numbers are larger than 4.5"
+                                                        WP="largers"
                                                         ng_finalize
                                                     else
                                                         if ng_check_ao; then
                                                             NP=17
-                                                            WP="all numbers are odd"
+                                                            WP="odds"
                                                             ng_finalize
                                                         else
                                                             if ng_check_ae; then
                                                                 NP=17
-                                                                WP="all numbers are even"
+                                                                WP="evens"
                                                                 ng_finalize
                                                             else
                                                                 if ng_check_iar; then
                                                                     NP=10
-                                                                    WP="all numbers are in a row"
+                                                                    WP="in a row"
                                                                     ng_finalize
                                                                 else
                                                                     if ng_check_riar; then
                                                                         NP=10
-                                                                        WP="all numbers are in a row"
+                                                                        WP="in a row"
                                                                         ng_finalize
                                                                     else
                                                                         NP=0
