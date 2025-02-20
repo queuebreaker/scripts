@@ -43,18 +43,14 @@ function ng_check_rseq {
 }
 
 function ng_check_id {
-    sum=0
-
-    sum=$((${arr[0]} + ${arr[1]} + ${arr[2]} + ${arr[3]}))
-
-    if [[ $sum == $((${arr[0]} * 4)) ]]; then
+    if grep -qE '^([0-9]+)( \1)*$' <<< "${arr[@]}"; then 
         return 0
     else
         return 1
-    fi
+fi
 }
 
-function ng_check_20 {
+function ng_check_22 {
     sum=0
 
     for i in $(seq 4); do
@@ -62,7 +58,37 @@ function ng_check_20 {
         sum=$((sum + ${arr[$j]}))
     done
 
-    if [[ $sum -eq 20 ]]; then
+    if [[ $sum -eq 22 ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function ng_check_11 {
+    sum=0
+
+    for i in $(seq 4); do
+        j=$((i - 1))
+        sum=$((sum + ${arr[$j]}))
+    done
+
+    if [[ $sum -eq 11 ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function ng_check_33 {
+    sum=0
+
+    for i in $(seq 4); do
+        j=$((i - 1))
+        sum=$((sum + ${arr[$j]}))
+    done
+
+    if [[ $sum -eq 33 ]]; then
         return 0
     else
         return 1
@@ -106,12 +132,11 @@ function ng_check_ae {
     fi
 }
 
-function ng_check_05 {
+function ng_check_m3 {
     test=0
-
     for i in $(seq 4); do
         j=$((i - 1))
-        if [[ $((6 - ${arr[$j]})) -gt 0 ]]; then
+        if [[ $((${arr[$j]} % 3)) -eq 0 ]]; then
             test=$((test + 1))
         else
             true
@@ -125,12 +150,31 @@ function ng_check_05 {
     fi
 }
 
-function ng_check_69 {
+function ng_check_sml {
     test=0
 
     for i in $(seq 4); do
         j=$((i - 1))
-        if [[ $((${arr[$j]} - 5)) -gt 0 ]]; then
+        if [[ $((5 - ${arr[$j]})) -gt 0 ]]; then
+            test=$((test + 1))
+        else
+            true
+        fi
+    done
+
+    if [[ $test = 4 ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function ng_check_big {
+    test=0
+
+    for i in $(seq 4); do
+        j=$((i - 1))
+        if [[ $((${arr[$j]} - 6)) -gt 0 ]]; then
             test=$((test + 1))
         else
             true
@@ -186,6 +230,22 @@ function ng_check_riar {
     fi
 }
 
+function ng_check_rep {
+    if [[ "${arr[0]}""${arr[1]}" == "${arr[2]}""${arr[3]}" ]] ; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function ng_check_pair {
+    if [[ "${arr[0]}" == "${arr[1]}" && "${arr[2]}" == "${arr[3]}" ]] ; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 function ng_finalize {
     TP=$((PP + NP))
     NEWNUM=${NUM//$SEQ/}
@@ -230,58 +290,88 @@ else
     if [[ ${#SEQ} -eq 4 ]]; then
         if echo "$NUM" | grep -q "$SEQ"; then
             if ng_check_id; then
-                NP=2000
-                WP="all numbers identical"
+                NP=420
+                WP="numbers are identical"
                 ng_finalize
             else
                 if ng_check_seq; then
-                    NP=1000
-                    WP="all numbers sequential"
+                    NP=350
+                    WP="numbers are sequential"
                     ng_finalize
                 else
                     if ng_check_rseq; then
-                        NP=1000
-                        WP="all numbers sequential"
+                        NP=350
+                        WP="numbers are sequential"
                         ng_finalize
                     else
-                        if ng_check_20; then
-                            NP=500
-                            WP="all numbers add up to 20"
+                        if ng_check_m3; then
+                            NP=51
+                            WP="numbers are multiples of 3"
                             ng_finalize
                         else
-                            if ng_check_ao; then
-                                NP=200
-                                WP="all numbers are odd"
+                            if ng_check_rep; then
+                                NP=42
+                                WP="sequence is an identical pair"
                                 ng_finalize
                             else
-                                if ng_check_ae; then
-                                    NP=200
-                                    WP="all numbers are even"
+                                if ng_check_pair; then
+                                    NP=42
+                                    WP="sequence is a pair of identicals"
                                     ng_finalize
                                 else
-                                    if ng_check_05; then
-                                        NP=200
-                                        WP="all numbers are less than 5,5"
+                                    if ng_check_11; then
+                                        NP=21
+                                        WP="numbers add up to 11"
                                         ng_finalize
                                     else
-                                        if ng_check_69; then
-                                            NP=200
-                                            WP="all numbers are greater than 5,5"
+                                        if ng_check_22; then
+                                            NP=21
+                                            WP="numbers add up to 22"
                                             ng_finalize
                                         else
-                                            if ng_check_iar; then
-                                                NP=100
-                                                WP="all numbers are in a row"
+                                            if ng_check_33; then
+                                                NP=21
+                                                WP="numbers add up to 33"
                                                 ng_finalize
                                             else
-                                                if ng_check_riar; then
-                                                    NP=100
-                                                    WP="all numbers are in a row"
+                                                if ng_check_sml; then
+                                                    NP=17
+                                                    WP="numbers are smaller than 4.5"
                                                     ng_finalize
                                                 else
-                                                    NP=0
-                                                    WP="no pattern"
-                                                    ng_finalize
+                                                    if ng_check_big; then
+                                                        NP=17
+                                                        WP="numbers are larger than 4.5"
+                                                        ng_finalize
+                                                    else
+                                                        if ng_check_ao; then
+                                                            NP=17
+                                                            WP="all numbers are odd"
+                                                            ng_finalize
+                                                        else
+                                                            if ng_check_ae; then
+                                                                NP=17
+                                                                WP="all numbers are even"
+                                                                ng_finalize
+                                                            else
+                                                                if ng_check_iar; then
+                                                                    NP=10
+                                                                    WP="all numbers are in a row"
+                                                                    ng_finalize
+                                                                else
+                                                                    if ng_check_riar; then
+                                                                        NP=10
+                                                                        WP="all numbers are in a row"
+                                                                        ng_finalize
+                                                                    else
+                                                                        NP=0
+                                                                        WP="no pattern"
+                                                                        ng_finalize
+                                                                    fi
+                                                                fi
+                                                            fi
+                                                        fi
+                                                    fi
                                                 fi
                                             fi
                                         fi
