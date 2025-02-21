@@ -26,7 +26,7 @@ function w_get {
 function w_check {
     i=$(($1 + $2))
 
-    if [[ "${SEED[$i]}" == 'w'   $i -lt 0  $i -gt 24 ]]; then
+    if [[ "${SEED[$i]}" == 'w' || $i -lt 0 || $i -gt 24 ]]; then
         MSG='you may not move there'
 
         return 1
