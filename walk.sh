@@ -70,8 +70,8 @@ function w_set {
     echo "${SEED[0]}""${var::-1}"
 }
 
-SEED_IN="{arg:0}"
-ACTION="{arg:1}"
+SEED_IN=$1
+ACTION=$2
 MSG='you are @, move using wasd, thats it for now but more is coming'
 
 w_get
