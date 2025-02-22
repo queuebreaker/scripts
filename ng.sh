@@ -174,7 +174,7 @@ function ng_check_big {
 
     for i in $(seq 4); do
         j=$((i - 1))
-        if [[ $((${arr[$j]} - 6)) -gt 0 ]]; then
+        if [[ $((${arr[$j]} - 4)) -gt 0 ]]; then
             test=$((test + 1))
         else
             true
