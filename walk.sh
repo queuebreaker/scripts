@@ -81,7 +81,8 @@ case $ACTION in
     a) w_check "$TILE_PLAYER" -1 && MSG='you moved west';;
     s) w_check "$TILE_PLAYER" 5 && MSG='you moved south';;
     d) w_check "$TILE_PLAYER" 1 && MSG='you moved east';;
-    *) w_check "$TILE_PLAYER" 0 && MSG='you did nothing';;
+    q) w_check "$TILE_PLAYER" 0 && MSG='you did nothing';;
+    init) w_check "$TILE_PLAYER" 0;;
 esac
 
 w_disp
