@@ -31,8 +31,8 @@ function w_check {
 
         return 1
     else
-        SEED[i]='p'
         SEED[$1]='t'
+        SEED[i]='p'
 
         return 0
     fi
