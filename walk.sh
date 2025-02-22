@@ -70,8 +70,8 @@ function w_set {
     echo "${SEED[0]}""${var::-1}"
 }
 
-SEED_IN="{arg:0}" || 't7,w3,t14,p1'
-ACTION="{arg:1}" || x
+SEED_IN="{arg:0}"
+ACTION="{arg:1}"
 MSG='you are @, move using wasd, thats it for now but more is coming'
 
 w_get
@@ -81,7 +81,7 @@ case $ACTION in
     a) w_check "$TILE_PLAYER" -1 && MSG='you moved west';;
     s) w_check "$TILE_PLAYER" 5 && MSG='you moved south';;
     d) w_check "$TILE_PLAYER" 1 && MSG='you moved east';;
-    *) w_checl "$TILE_PLAYER" 0 && MSG='you did nothing';;
+    *) w_check "$TILE_PLAYER" 0 && MSG='you did nothing';;
 esac
 
 w_disp
