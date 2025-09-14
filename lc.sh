@@ -1,6 +1,6 @@
 main()
 {
-    mapfile -t INPOPS < $*
+    mapfile -t INPOPS < <(echo {args})
 
     for i in "${!INPOPS[@]}"
     do
