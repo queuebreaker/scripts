@@ -1,8 +1,6 @@
-ARGS={args}
-
 main()
 {
-    mapfile -t INPOPS < $ARGS
+    mapfile -t INPOPS < $*
 
     for i in "${!INPOPS[@]}"
     do
@@ -43,8 +41,6 @@ main()
     do
         echo "${OUTOPS[$i]}" >> "$OUTFILE".sh
     done
-
-    bash lazy.sh
 }
 
 main "$@"
