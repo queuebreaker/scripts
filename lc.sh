@@ -1,9 +1,9 @@
 main()
 {
-	INPOPS=("$@")
+	read -a INPOPS <<< "$1"
 
     for i in "${INPOPS[@]}"
-    do 
+    do
         case $i in
             PUTA) OUTOPS+=('A=$HAND');;
             PUTB) OUTOPS+=('B=$HAND');;
@@ -29,6 +29,7 @@ main()
             DECR) OUTOPS+=('HAND=$((HAND - 1))');;
             YELL) OUTOPS+=('echo $HAND');;
             '') true;;
+			\$[0-9]* | \$*) OUTOPS+=("HAND=$i");;
             *) OUTOPS+=("HAND=$i");;
         esac
     done
@@ -40,6 +41,10 @@ main()
     do
         echo "${OUTOPS[$i]}" >> lazy.sh
     done
+
+    shift 1
+
+    bash lazy.sh "$@"
 }
 
 main "$@"
