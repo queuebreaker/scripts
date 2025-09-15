@@ -1,10 +1,11 @@
 main()
 {
-    mapfile -t INPOPS < <(echo $*)
+	INPOPS=("$@")
 
-    for i in "${!INPOPS[@]}"
+    for i in "${INPOPS[@]}"
     do
-        case "${INPOPS[i]}" in
+		echo $i 
+        case $i in
             PUTA) OUTOPS+=('A=$HAND');;
             PUTB) OUTOPS+=('B=$HAND');;
             PUTC) OUTOPS+=('C=$HAND');;
@@ -29,17 +30,16 @@ main()
             DECR) OUTOPS+=('HAND=$((HAND - 1))');;
             YELL) OUTOPS+=('echo $HAND');;
             '') true;;
-            *) OUTOPS+=("HAND=${INPOPS[i]}");;
+            *) OUTOPS+=("HAND=$i");;
         esac
     done
 
     echo '#!/bin/bash' > lazy.sh
-    echo '# This file has been auto-generated with lc.' >> lazy.sh
     echo 'HAND=0; A=0; B=0; C=0; D=0; E=0; F=0; G=0; H=0' >> lazy.sh
 
     for i in "${!OUTOPS[@]}"
     do
-        echo "${OUTOPS[$i]}" >> "$OUTFILE".sh
+        echo "${OUTOPS[$i]}" >> lazy.sh
     done
 }
 
