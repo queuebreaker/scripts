@@ -29,7 +29,7 @@ main()
             DECR) OUTOPS+=('HAND=$((HAND - 1))');;
             YELL) OUTOPS+=('echo $HAND');;
             '') true;;
-			\$[0-9]* | \$*) OUTOPS+=("HAND=$i");;
+			%[0-9]* | \$*) OUTOPS+=("HAND=\$${i:1}");;
             *) OUTOPS+=("HAND=$i");;
         esac
     done
