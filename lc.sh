@@ -3,8 +3,7 @@ main()
 	INPOPS=("$@")
 
     for i in "${INPOPS[@]}"
-    do
-		echo $i 
+    do 
         case $i in
             PUTA) OUTOPS+=('A=$HAND');;
             PUTB) OUTOPS+=('B=$HAND');;
